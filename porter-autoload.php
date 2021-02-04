@@ -18,6 +18,10 @@ spl_autoload_register(function($classname) {
                     $path .= 'exceptions/';
                     break;
 
+                case 'Handlers':
+                    $path .= 'handlers/';
+                    break;
+
             }
 
         }
