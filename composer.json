@@ -16,7 +16,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Porter": "src"
+            "Infernusophiuchus\\Porter\\": "src/Porter",
+            "Infernusophiuchus\\Porter\\Exceptions\\": "src/Porter/Exceptions",
+            "Infernusophiuchus\\Porter\\Handlers\\": "src/Porter/Handlers"
         }
     }
 }

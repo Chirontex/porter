@@ -2,7 +2,7 @@
 
 Porter helps you with deploying application from dev directory.
 
-[![version](https://img.shields.io/badge/version-0.1.6-informational "version")](https://img.shields.io/badge/version-0.1.6-informational "version") [![PHP version](https://img.shields.io/badge/PHP-7.3%2B-blue "PHP version")](http:/https://img.shields.io/badge/PHP-7.3%2B-blue/ "PHP version")
+[![version](https://img.shields.io/badge/version-0.1.7-informational "version")](https://img.shields.io/badge/version-0.1.7-informational "version") [![PHP version](https://img.shields.io/badge/PHP-7.3%2B-blue "PHP version")](http:/https://img.shields.io/badge/PHP-7.3%2B-blue/ "PHP version")
 
 ## How to use
 
