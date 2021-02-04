@@ -17,7 +17,7 @@ Basic CLI implementation might look like this:
 use Infernusophiuchus\Porter\Main as Porter;
 use Infernusophiuchus\Porter\Exceptions\MainException;
 
-require_once __DIR__.'/src/porter-autoload.php'; // need to replaced by your path
+require_once __DIR__.'/vendor/infernusophiuchus/porter/src/porter-autoload.php';
 
 try {
 

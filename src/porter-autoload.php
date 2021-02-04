@@ -10,21 +10,7 @@ spl_autoload_register(function($classname) {
 
         $file = explode('\\', $classname);
 
-        if (count($file) > 3) {
-
-            switch ($file[count($file) - 2]) {
-
-                case 'Exceptions':
-                    $path .= 'exceptions/';
-                    break;
-
-                case 'Handlers':
-                    $path .= 'handlers/';
-                    break;
-
-            }
-
-        }
+        if (count($file) > 3) $path .= $file[count($file) - 2].'/';
 
         $file = $file[count($file) - 1].'.php';
 
