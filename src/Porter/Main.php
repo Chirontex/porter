@@ -1,6 +1,6 @@
 <?php
 /**
- *    Porter 0.1.0
+ *    Porter 0.1.5
  *    Copyright (C) 2021  Dmitry Shumilin
  *
  *    This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,10 @@
 namespace Infernusophiuchus\Porter;
 
 use Infernusophiuchus\Porter\Handlers\DirectoryHandler;
+use Infernusophiuchus\Porter\Handlers\Cleaner;
 use Infernusophiuchus\Porter\Exceptions\MainException;
 use Infernusophiuchus\Porter\Exceptions\DirectoryHandlerException;
+use Infernusophiuchus\Porter\Exceptions\CleanerException;
 
 class Main
 {
@@ -81,6 +83,16 @@ class Main
                 $this->deploy();
                 break;
 
+            case 'depclean':
+                $this->deployClean();
+                break;
+
+            case 'help':
+                echo "\n";
+                echo "deploy — Deploy the application.\n";
+                echo "depclean — Delete previous deploy.\n";
+                break;
+
             default:
                 echo "\nInvalid command.\n";
                 break;
@@ -102,16 +114,53 @@ class Main
         try {
 
             $dh = new DirectoryHandler($this->dist, $this->deploy);
-            $dh->copyAll();
 
-            if (file_exists($this->deploy.'/index.html')) rename(
-                $this->deploy.'/index.html',
-                $this->deploy.'/index.php'
+            $deployed = $dh->copyAll();
+
+            if (file_exists($this->deploy.'/index.html')) {
+                
+                if (rename(
+                    $this->deploy.'/index.html',
+                    $this->deploy.'/index.php'
+                )) {
+
+                    $i = array_search($this->deploy.'/index.html', $deployed);
+
+                    if (is_int($i)) $deployed[$i] = $this->deploy.'/index.php';
+
+                }
+        
+            }
+
+            file_put_contents(
+                $this->deploy.'/deployed.json',
+                json_encode($deployed)
             );
 
             echo "\nThe application deploying completed.\n";
 
         } catch (DirectoryHandlerException $e) {}
+
+        if (isset($e)) throw new MainException($e->getMessage(), $e->getCode());
+
+    }
+
+    /**
+     * Removes app previous deployment.
+     * 
+     * @return void
+     * 
+     * @throws MainException
+     */
+    public function deployClean() : void
+    {
+
+        try {
+
+            $cleaner = new Cleaner($this->deploy);
+            $cleaner->removeDeploy();
+
+        } catch (CleanerException $e) {}
 
         if (isset($e)) throw new MainException($e->getMessage(), $e->getCode());
 

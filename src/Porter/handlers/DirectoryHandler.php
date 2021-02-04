@@ -42,12 +42,14 @@ class DirectoryHandler
     /**
      * Copy all files and directories from source to destination directory.
      * 
-     * @return void
+     * @return array
      * 
      * @throws DirectoryHandlerException
      */
-    public function copyAll() : void
+    public function copyAll() : array
     {
+
+        $result = [];
 
         $dir = opendir($this->source);
 
@@ -72,16 +74,22 @@ class DirectoryHandler
                     $this->destination.'/'.$entity
                 );
 
-                $dh->copyAll();
+                $result = array_merge($result, $dh->copyAll());
 
-            } else copy(
-                $this->source.'/'.$entity,
-                $this->destination.'/'.$entity
-            );
+            } else {
+                
+                if (copy(
+                    $this->source.'/'.$entity,
+                    $this->destination.'/'.$entity
+                )) $result[] = $this->destination.'/'.$entity;
+        
+            }
 
         }
 
         closedir($dir);
+
+        return $result;
 
     }
 
