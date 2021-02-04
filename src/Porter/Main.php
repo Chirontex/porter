@@ -124,9 +124,9 @@ class Main
                     $this->deploy.'/index.php'
                 )) {
 
-                    $i = array_search($this->deploy.'/index.html', $deployed);
+                    $i = array_search($this->deploy.'/index.html', $deployed['files']);
 
-                    if (is_int($i)) $deployed[$i] = $this->deploy.'/index.php';
+                    if (is_int($i)) $deployed['files'][$i] = $this->deploy.'/index.php';
 
                 }
         

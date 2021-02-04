@@ -42,13 +42,20 @@ class Cleaner
                 true
             );
 
-            foreach ($deployed as $key => $value) {
+            foreach ($deployed['files'] as $key => $value) {
 
-                if (unlink($value)) unset($deployed[$key]);
+                if (unlink($value)) unset($deployed['files'][$key]);
 
             }
 
-            if (empty($deployed)) unlink($this->deploy.'/deployed.json');
+            foreach ($deployed['dirs'] as $key => $value) {
+
+                if (rmdir($value)) unset($deployed['dirs'][$key]);
+
+            }
+
+            if (empty($deployed['files']) &&
+                empty($deployed['dirs'])) unlink($this->deploy.'/deployed.json');
 
             echo "\nCleaning complete.\n";
 

@@ -49,7 +49,7 @@ class DirectoryHandler
     public function copyAll() : array
     {
 
-        $result = [];
+        $result = ['files' => [], 'dirs' => []];
 
         $dir = opendir($this->source);
 
@@ -69,19 +69,31 @@ class DirectoryHandler
                     $this->destination.'/'.$entity
                 )) mkdir($this->destination.'/'.$entity);
 
+                $result['dirs'][] = $this->destination.'/'.$entity;
+
                 $dh = new DirectoryHandler(
                     $this->source.'/'.$entity,
                     $this->destination.'/'.$entity
                 );
 
-                $result = array_merge($result, $dh->copyAll());
+                $copied = $dh->copyAll();
+
+                $result['files'] = array_merge(
+                    $result['files'],
+                    $copied['files']
+                );
+
+                $result['dirs'] = array_merge(
+                    $result['dirs'],
+                    $copied['dirs']
+                );
 
             } else {
                 
                 if (copy(
                     $this->source.'/'.$entity,
                     $this->destination.'/'.$entity
-                )) $result[] = $this->destination.'/'.$entity;
+                )) $result['files'][] = $this->destination.'/'.$entity;
         
             }
 
