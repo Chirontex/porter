@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 /**
- *    Porter 0.0.1
- *    Copyright (C) 2021  Dmitry Shumilin (dr.noisier@yandex.ru)
+ *    Porter 0.0.2
+ *    Copyright (C) 2021  Dmitry Shumilin
  *
  *    This program is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
