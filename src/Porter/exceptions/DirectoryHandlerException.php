@@ -15,4 +15,7 @@ class DirectoryHandlerException extends Exception
     const INVALID_DESTINATION_CODE = -11;
     const INVALID_DESTINATION_MESSAGE = 'Invalid destination directory.';
 
+    const FALSE_OPENDIR_CODE = -12;
+    const FALSE_OPENDIR_MESSAGE = 'Directory opening failure.';
+
 }

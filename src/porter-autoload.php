@@ -6,7 +6,7 @@ spl_autoload_register(function($classname) {
 
     if (strpos($classname, 'Infernusophiuchus\\Porter') !== false) {
 
-        $path = __DIR__.'/src/';
+        $path = __DIR__.'/Porter/';
 
         $file = explode('\\', $classname);
 

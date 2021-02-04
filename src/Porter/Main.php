@@ -1,6 +1,6 @@
 <?php
 /**
- *    Porter 0.0.3
+ *    Porter 0.1.0
  *    Copyright (C) 2021  Dmitry Shumilin
  *
  *    This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,9 @@
  */
 namespace Infernusophiuchus\Porter;
 
+use Infernusophiuchus\Porter\Handlers\DirectoryHandler;
 use Infernusophiuchus\Porter\Exceptions\MainException;
+use Infernusophiuchus\Porter\Exceptions\DirectoryHandlerException;
 
 class Main
 {
@@ -54,12 +56,12 @@ class Main
                     switch ($dir) {
 
                         case 'dist':
-                            $message = MainException::INVALID_DIST_MESSAGE;
+                            $message = MainException::INVALID_DIST_MESSAGE.' "'.$this->$dir.'"';
                             $code = MainException::INVALID_DIST_CODE;
                             break;
 
                         case 'deploy':
-                            $message = MainException::INVALID_DEPLOY_MESSAGE;
+                            $message = MainException::INVALID_DEPLOY_MESSAGE.' "'.$this->$dir.'"';
                             $code = MainException::INVALID_DEPLOY_CODE;
                             break;
 
@@ -87,10 +89,31 @@ class Main
 
     }
 
-    public function deploy()
+    /**
+     * Deploy the app.
+     * 
+     * @return void
+     * 
+     * @throws MainException
+     */
+    public function deploy() : void
     {
 
+        try {
 
+            $dh = new DirectoryHandler($this->dist, $this->deploy);
+            $dh->copyAll();
+
+            if (file_exists($this->deploy.'/index.html')) rename(
+                $this->deploy.'/index.html',
+                $this->deploy.'/index.php'
+            );
+
+            echo "\nThe application deploying completed.\n";
+
+        } catch (DirectoryHandlerException $e) {}
+
+        if (isset($e)) throw new MainException($e->getMessage(), $e->getCode());
 
     }
 
