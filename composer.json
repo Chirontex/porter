@@ -3,7 +3,7 @@
     "description": "Porter helps you with deploying application from dev directory.",
     "type": "library",
     "license": "GPL-3.0",
-    "version": "0.1.7",
+    "version": "0.2.0",
     "homepage": "https://github.com/infernusophiuchus/porter",
     "authors": [
         {

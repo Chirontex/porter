@@ -18,4 +18,7 @@ class MainException extends Exception
     const INVALID_DEPLOY_CODE = -3;
     const INVALID_DEPLOY_MESSAGE = 'Invalid deploy directory.';
 
+    const DIST_DEPLOY_EQUAL_CODE = -4;
+    const DIST_DEPLOY_EQUAL_MESSAGE = 'Distributive and deploy directories cannot be equal.';
+
 }

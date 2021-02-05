@@ -1,6 +1,6 @@
 <?php
 /**
- *    Porter 0.1.5
+ *    Porter 0.2.0
  *    Copyright (C) 2021  Dmitry Shumilin
  *
  *    This program is free software: you can redistribute it and/or modify
@@ -30,13 +30,13 @@ class Main
     protected $dist;
     protected $deploy;
 
-    public function __construct(string $basedir, string $dist, string $deploy, string $command)
+    public function __construct(string $basedir, string $dist, string $deploy)
     {
 
         if (substr($basedir, -1) === '/' ||
             substr($basedir, -1) === '\\') $basedir = substr($basedir, 0, -1);
         
-        if (!is_dir($basedir)) throw new MainException(
+        if (!empty($basedir) && !is_dir($basedir)) throw new MainException(
             MainException::INVALID_BASEDIR_MESSAGE,
             MainException::INVALID_BASEDIR_CODE
         );
@@ -58,12 +58,12 @@ class Main
                     switch ($dir) {
 
                         case 'dist':
-                            $message = MainException::INVALID_DIST_MESSAGE.' "'.$this->$dir.'"';
+                            $message = '"'.$this->$dir.'" — '.MainException::INVALID_DIST_MESSAGE;
                             $code = MainException::INVALID_DIST_CODE;
                             break;
 
                         case 'deploy':
-                            $message = MainException::INVALID_DEPLOY_MESSAGE.' "'.$this->$dir.'"';
+                            $message = '"'.$this->$dir.'" — '.MainException::INVALID_DEPLOY_MESSAGE;
                             $code = MainException::INVALID_DEPLOY_CODE;
                             break;
 
@@ -76,6 +76,23 @@ class Main
             }
 
         }
+
+        if ($this->dist === $this->deploy) throw new MainException(
+            MainException::DIST_DEPLOY_EQUAL_MESSAGE,
+            MainException::DIST_DEPLOY_EQUAL_CODE
+        );
+
+    }
+
+    /**
+     * Run the command.
+     * 
+     * @param string $command
+     * 
+     * @return void
+     */
+    public function command(string $command) : void
+    {
 
         switch ($command) {
 
