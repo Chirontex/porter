@@ -69,14 +69,26 @@ class Entrance extends Main
                 else $settings = [
                     'basedir' => '',
                     'dist' => '',
-                    'deploy' => ''
+                    'deploy' => '',
+                    'tfi' => 1
                 ];
 
-                $this->args[3] = (substr($this->args[3], -1) === '/' ||
-                    substr($this->args[3], -1) === '\\') ?
-                    substr($this->args[3], 0, -1) : $this->args[3];
+                if ($this->args[2] === 'tfi') {
+                    
+                    $settings['tfi'] = (int)$this->args[3];
 
-                $settings[$this->args[2]] = $this->args[3];
+                    if ($settings['tfi'] > 0) $settings['tfi'] = 1;
+                    else $settings['tfi'] = 0;
+                
+                } else {
+
+                    $this->args[3] = (substr($this->args[3], -1) === '/' ||
+                        substr($this->args[3], -1) === '\\') ?
+                        substr($this->args[3], 0, -1) : $this->args[3];
+
+                    $settings[$this->args[2]] = $this->args[3];
+
+                }
 
                 if (file_put_contents(
                     __DIR__.'/settings.json',
@@ -90,18 +102,31 @@ class Entrance extends Main
 
                 break;
 
+            case 'deploy':
+
+                $settings = json_decode(
+                    file_get_contents(__DIR__.'/settings.json'),
+                    true
+                );
+
+                $this->deploy($settings['tfi'] === 1 ? true : false);
+
+                break;
+
             case 'help':
                 echo "\n";
                 echo "deploy — Deploy the application.\n";
                 echo "depclean — Delete previous deploy.\n";
                 echo "set [setting] [value] — Sets the settings.\n";
-                echo "\t[setting] — name of the setting. Available settings:\n";
-                echo "\t\tbasedir — Basic directory which contains dist and deploy directories.\n";
-                echo "\t\t\tIf these directories locate in different directories,\n";
-                echo "\t\t\tset this to '/'.\n";
-                echo "\t\tdist — Distributive directory. If basedir was set, dist must be relative.\n";
-                echo "\t\tdeploy — Deploy directory. If basedir was set, deploy must be relative.\n";
-                echo "\t[value] — Value of the setting.\n";
+                echo "    [setting] — name of the setting. Available settings:\n";
+                echo "        basedir — Basic directory which contains dist and deploy directories.\n";
+                echo "        If these directories locate in different directories,\n";
+                echo "         set this to '/'.\n";
+                echo "        dist — Distributive directory. If basedir was set, dist must be relative.\n";
+                echo "        deploy — Deploy directory. If basedir was set, deploy must be relative.\n";
+                echo "        tfi — Transform index.html in index.php or not.\n";
+                echo "    [value] — Value of the setting.\n";
+                echo "        'tfi' setting accepts only 0 or 1, others accepts the directories paths.\n";
                 echo "help — View commands list.\n";
                 break;
 

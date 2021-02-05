@@ -50,7 +50,14 @@ class Cleaner
 
             foreach ($deployed['dirs'] as $key => $value) {
 
-                if (rmdir($value)) unset($deployed['dirs'][$key]);
+                $scan = scandir($value);
+
+                if (is_array($scan)) {
+
+                    if (count($scan) > 2) unset($deployed['dirs'][$key]);
+                    elseif (rmdir($value)) unset($deployed['dirs'][$key]);
+
+                }
 
             }
 

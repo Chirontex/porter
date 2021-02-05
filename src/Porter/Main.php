@@ -1,6 +1,6 @@
 <?php
 /**
- *    Porter 0.2.0
+ *    Porter 0.2.2
  *    Copyright (C) 2021  Dmitry Shumilin
  *
  *    This program is free software: you can redistribute it and/or modify
@@ -121,11 +121,14 @@ class Main
     /**
      * Deploy the app.
      * 
+     * @param bool $tfi
+     * If true, the method will transform index.html to index.php.
+     * 
      * @return void
      * 
      * @throws MainException
      */
-    public function deploy() : void
+    public function deploy(bool $tfi = true) : void
     {
 
         try {
@@ -134,19 +137,23 @@ class Main
 
             $deployed = $dh->copyAll();
 
-            if (file_exists($this->deploy.'/index.html')) {
-                
-                if (rename(
-                    $this->deploy.'/index.html',
-                    $this->deploy.'/index.php'
-                )) {
+            if ($tfi) {
 
-                    $i = array_search($this->deploy.'/index.html', $deployed['files']);
+                if (file_exists($this->deploy.'/index.html')) {
+                    
+                    if (rename(
+                        $this->deploy.'/index.html',
+                        $this->deploy.'/index.php'
+                    )) {
 
-                    if (is_int($i)) $deployed['files'][$i] = $this->deploy.'/index.php';
+                        $i = array_search($this->deploy.'/index.html', $deployed['files']);
 
+                        if (is_int($i)) $deployed['files'][$i] = $this->deploy.'/index.php';
+
+                    }
+            
                 }
-        
+
             }
 
             file_put_contents(
