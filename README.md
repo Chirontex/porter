@@ -2,7 +2,7 @@
 
 Porter helps you with deploying application from dev directory.
 
-[![version](https://img.shields.io/badge/version-0.1.7-informational "version")](https://img.shields.io/badge/version-0.1.7-informational "version") [![PHP version](https://img.shields.io/badge/PHP-7.3%2B-blue "PHP version")](http:/https://img.shields.io/badge/PHP-7.3%2B-blue/ "PHP version")
+[![version](https://img.shields.io/badge/version-0.2.0-informational "version")](https://img.shields.io/badge/version-0.2.0-informational "version") [![PHP version](https://img.shields.io/badge/PHP-7.3%2B-blue "PHP version")](http:/https://img.shields.io/badge/PHP-7.3%2B-blue/ "PHP version")
 
 ## How to use
 
@@ -14,21 +14,17 @@ Basic CLI implementation might look like this:
 /**
  * Porter CLI implementation
  */
-use Infernusophiuchus\Porter\Main as Porter;
-use Infernusophiuchus\Porter\Exceptions\MainException;
+use Infernusophiuchus\Porter\Entrance as Porter;
+use Infernusophiuchus\Porter\Exceptions\EntranceException;
 
-require_once __DIR__.'/vendor/infernusophiuchus/porter/src/porter-autoload.php';
+// Special autoloader for avoid loading other packages if you do not need it.
+require_once __DIR__.'/vendor/infernusophiuchus/portersrc/porter-autoload.php';
 
 try {
 
-    new Porter(
-        __DIR__, // <-- basic directory
-        '/dev/dist', // <-- distributive directory
-        '/', // <-- deployment directory
-        (string)$argv[1] // <-- command
-    );
+    new Porter($argv);
 
-} catch (MainException $e) {
+} catch (EntranceException $e) {
 
     echo "\nERROR, ".$e->getCode().": ".$e->getMessage()."\n";
 
@@ -36,4 +32,4 @@ try {
 
 ```
 
-Check the **help** command to learn other available commands. It is very simple!
+After implementation completed, you must setup your Porter with **set** command. Check the **help** command to learn how and discover other available commands. It is very simple!
