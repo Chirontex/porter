@@ -4,6 +4,10 @@ Porter helps you with deploying application from dev directory.
 
 [![version](https://img.shields.io/badge/version-0.2.2-informational "version")](https://img.shields.io/badge/version-0.2.2-informational "version") [![PHP version](https://img.shields.io/badge/PHP-7.3%2B-blue "PHP version")](http:/https://img.shields.io/badge/PHP-7.3%2B-blue/ "PHP version")
 
+## Install
+
+`composer require infernuophiuchus/porter`
+
 ## How to use
 
 Basic CLI implementation might look like this:
@@ -17,7 +21,8 @@ Basic CLI implementation might look like this:
 use Infernusophiuchus\Porter\Entrance as Porter;
 use Infernusophiuchus\Porter\Exceptions\EntranceException;
 
-// Special autoloader for avoid loading other packages if you do not need it.
+// Special autoloader for avoid loading other packages if you do not need it,
+// otherwise you can plug Porter via Composer autoloader.
 require_once __DIR__.'/vendor/infernusophiuchus/porter/src/porter-autoload.php';
 
 try {
