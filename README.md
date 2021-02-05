@@ -18,7 +18,7 @@ use Infernusophiuchus\Porter\Entrance as Porter;
 use Infernusophiuchus\Porter\Exceptions\EntranceException;
 
 // Special autoloader for avoid loading other packages if you do not need it.
-require_once __DIR__.'/vendor/infernusophiuchus/portersrc/porter-autoload.php';
+require_once __DIR__.'/vendor/infernusophiuchus/porter/src/porter-autoload.php';
 
 try {
 
